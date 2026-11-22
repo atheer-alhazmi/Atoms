@@ -1,0 +1,146 @@
+:root {
+  font-family: "Aptos", "Segoe UI", system-ui, sans-serif;
+  color: #f7faf4;
+  background: #232e29;
+  color-scheme: dark;
+  font-synthesis: none;
+  --edge: rgba(224, 238, 225, .17);
+  --ink: #f4f8f0;
+  --subtle: #bed0c2;
+  --active: #9bdaba;
+  --label: #dce8dd;
+  --gutter: clamp(12px, 2vw, 27px);
+}
+* {box-sizing: border-box}
+body {margin: 0; overflow: hidden}
+button, input {font: inherit; -webkit-tap-highlight-color: transparent}
+button {color: inherit; cursor: pointer}
+button:focus-visible, input:focus-visible {outline: 2px solid var(--active); outline-offset: 2px}
+.experience, .scene, .scene canvas {position: fixed; inset: 0; width: 100%; height: 100%}
+.experience {overflow: hidden; isolation: isolate}
+.scene {outline: none; touch-action: none; cursor: grab; user-select: none}
+.scene:focus-visible {outline: 2px solid var(--active); outline-offset: -4px}
+.scene.looking {cursor: grabbing}
+.scene canvas {display: block; pointer-events: none}
+.scene-error {position: fixed; inset: 40% 10% auto; text-align: center}
+.glass {
+  background: rgba(18, 29, 25, .84);
+  -webkit-backdrop-filter: blur(22px) saturate(118%);
+  backdrop-filter: blur(22px) saturate(118%);
+  border: 1px solid var(--edge);
+  border-radius: 15px;
+  box-shadow: 0 12px 42px rgba(7, 14, 10, .26);
+}
+.console {
+  position: fixed;
+  z-index: 2;
+  inset: auto max(var(--gutter), env(safe-area-inset-right)) max(var(--gutter), env(safe-area-inset-bottom)) auto;
+  display: flex;
+  flex-direction: column-reverse;
+  width: min(307px, calc(100% - 2 * var(--gutter)));
+}
+.console:has(.weather-trigger[aria-expanded="false"]) {width: min(223px, calc(100% - 2 * var(--gutter)))}
+.console-bar {display: flex; align-items: stretch; padding: 5px; gap: 5px}
+.weather-trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-height: 44px;
+  min-width: 0;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 9px;
+  padding: 3px 6px 3px 3px;
+}
+.weather-icon {
+  background: #accab322;
+  color: #dfeee2;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+}
+.weather-name strong, .weather-name small {display: block}
+.weather-name strong {font-size: 13px; font-weight: 650; line-height: 1.2}
+.weather-name small {margin-top: 3px; font-size: 10px; line-height: 1.2; color: var(--subtle)}
+.weather-trigger > svg {color: var(--subtle)}
+.icon-button {
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 37px;
+  height: 39px;
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  background: #d2efd711;
+  color: var(--label);
+  flex: 0 0 auto;
+}
+.icon-button[aria-expanded="true"] {color: var(--active); background: #85c5a226; border-color: #91c5ab70}
+.console-body {padding: 13px 12px 10px; border-bottom: 1px solid var(--edge); max-height: calc(100dvh - 86px); overflow: auto}
+.control-title {display: flex; align-items: center; gap: 7px; margin-bottom: 8px; color: var(--label)}
+h2, h3 {font-size: 12px; font-weight: 640; color: var(--label); margin: 0}
+.presets {display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px}
+.presets button, .playback button, .speed-buttons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 34px;
+  padding: 4px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: #eef6ed0c;
+  font-size: 11px;
+  font-weight: 590;
+  white-space: nowrap;
+  color: var(--label);
+}
+.presets button {white-space: normal; line-height: 1.12}
+.presets button svg {flex-shrink: 0}
+.presets button[aria-pressed="true"], .speed-buttons button[aria-pressed="true"] {background: #8ce2b528; color: #c5f2da; border-color: #9edeb665}
+.weather-trigger:hover, .icon-button:hover, .presets button:hover, .speed-buttons button:hover, .playback button:hover {background: #eef6ed24}
+.intensity, .speed {display: grid; gap: 6px; margin-top: 11px}
+.intensity span {display: flex; justify-content: space-between; font-size: 12px; color: var(--label); font-weight: 630}
+.intensity output {font-variant-numeric: tabular-nums; color: var(--active)}
+.intensity input {width: 100%; height: 19px; margin: 0; cursor: pointer; accent-color: var(--active)}
+.speed {grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px}
+.speed-buttons, .playback {display: flex; gap: 4px}
+.speed-buttons button, .playback button {flex: 1}
+.speed-buttons button {min-height: 29px}
+.playback {border-top: 1px solid var(--edge); padding-top: 9px; margin-top: 11px}
+.playback button {gap: 6px}
+.sensors {
+  position: fixed;
+  z-index: 1;
+  inset: auto auto max(var(--gutter), env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  width: min(277px, calc(100% - 2 * var(--gutter)));
+  padding: 8px 12px 10px;
+}
+.sensor-header {display: flex; align-items: center; justify-content: space-between; gap: 8px}
+.sensor-header h2, .sensors dt {display: flex; align-items: center; gap: 6px}
+.sensor-header h2 {font-size: 13px}
+.sensor-header .close {width: 27px; height: 27px; border: 0; background: transparent}
+.sensors dl {display: grid; gap: 0; margin: 2px 0 0}
+.sensors dl > div {display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid #e6f4eb1c; font-size: 11px}
+.sensors dt {color: var(--subtle); white-space: nowrap}
+.sensors dt svg {width: 13px; height: 13px; opacity: .79}
+.sensors dd {margin: 0; font-weight: 630; font-variant-numeric: tabular-nums; text-align: right}
+.sensors dd span {display: block; line-height: 1.35}
+.sensors dd small {font-size: inherit; font-weight: 480; color: var(--subtle)}
+.sensors dd.wet {color: #b6dfff}
+.sensors dd.dry {color: var(--active)}
+@media (max-width: 650px) {
+  .sensors {inset: max(var(--gutter), env(safe-area-inset-top)) auto auto max(var(--gutter), env(safe-area-inset-left)); width: min(255px, calc(100% - 2 * var(--gutter)))}
+  .console {width: min(287px, calc(100% - 2 * var(--gutter)))}
+  .console-body {max-height: min(calc(100dvh - 76px), 56dvh)}
+  .presets button, .playback button {min-height: 38px}
+  .speed-buttons button {min-height: 34px}
+}
+@media (max-width: 650px) and (max-height: 500px) {
+  .sensors {width: min(247px, 43vw)}
+}
